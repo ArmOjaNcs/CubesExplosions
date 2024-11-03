@@ -6,12 +6,6 @@ public class MaterialHolder : MonoBehaviour
 
     public static MaterialHolder Instance { get; private set; }
     
-    public Material GetMaterial()
-    {
-        int numberOfMaterial = UserUtils.GetRandomNumber(_materials.Length);
-        return _materials[numberOfMaterial];
-    }
-
     private void Awake()
     {
         if(Instance == null)
@@ -21,5 +15,11 @@ public class MaterialHolder : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+    
+    public Material GetMaterial()
+    {
+        int numberOfMaterial = UserUtils.GetRandomNumber(_materials.Length);
+        return _materials[numberOfMaterial];
     }
 }

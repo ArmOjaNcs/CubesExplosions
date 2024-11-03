@@ -8,6 +8,22 @@ public class ExplodableCubesSpawner : MonoBehaviour
 
     public static ExplodableCubesSpawner Instance { get; private set; }
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+            return;
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        SetStartCubes();
+    }
+
     public List<ExplodableCube> GetSpawnedCubes(Vector3 position, Vector3 scale, int explosionChance, int count)
     {
         List<ExplodableCube> explodableCubes = new List<ExplodableCube>();
@@ -26,22 +42,6 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         return explodableCubes;
-    }
-
-    private void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-            return;
-        }
-
-        Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        SetStartCubes();
     }
 
     private Vector3 GetPosition(int cubeNumber, Vector3 scale, bool isStart = false)
