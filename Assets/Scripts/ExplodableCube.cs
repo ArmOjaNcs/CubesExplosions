@@ -1,14 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(MeshRenderer))]
 public class ExplodableCube : MonoBehaviour
 {
-    [Header("Настройки куба")]
-    [SerializeField, Range(5, 30)] private float _explosionRadius;
-    [SerializeField, Range(100, 1000)] private float _explosionForce;
-
     public readonly int MaxExplosionChance = 100;
     
     private Rigidbody _rigidbody;
@@ -19,7 +14,10 @@ public class ExplodableCube : MonoBehaviour
     private readonly int _divider = 2;
 
     private ExplodableCubesSpawner _spawner;
+    private Exploder _exploder;
     private int _explosionChance;
+
+    public Rigidbody Rigidbody => _rigidbody;
 
     private void Awake()
     {
@@ -34,34 +32,34 @@ public class ExplodableCube : MonoBehaviour
         if (chanceToExploid < _explosionChance)
         {
             int countToSpawn = Random.Range(_minCountToSpawn, _maxCountToSpawn + 1);
-            List<ExplodableCube> cubesToExploid = _spawner.SpawnCubes(transform.position,
-                transform.localScale, _explosionChance, countToSpawn);
-
-            foreach (ExplodableCube cube in cubesToExploid)
-                cube.AddExplosionForce(transform.position);
+            _exploder.ExploidLikeParent(_spawner.SpawnCubes(transform.position,
+                transform.localScale, _explosionChance, countToSpawn, _rigidbody.mass), this);
+        }
+        else
+        {
+            _exploder.ExploidLikeSingle(transform.position, transform.localScale.x);
         }
 
         Destroy(gameObject);
     }
 
-    public void Init(int parentExplosionChance, Vector3 parentScale, Material material, ExplodableCubesSpawner spawner, bool isStart = false)
+    public void Init(int parentExplosionChance, Vector3 parentScale, Material material, 
+        ExplodableCubesSpawner spawner, Exploder exploder, float mass, bool isStart = false)
     {
         if (isStart)
         {
             _explosionChance = MaxExplosionChance;
+            _rigidbody.mass = mass;
         }
         else
         {
             _explosionChance = parentExplosionChance / _divider;
             transform.localScale = parentScale / _divider;
+            _rigidbody.mass = mass / _divider;
         }
 
         _spawner = spawner;
+        _exploder = exploder;
         _renderer.sharedMaterial = material;
-    }
-
-    public void AddExplosionForce(Vector3 explosionPosition)
-    {
-        _rigidbody.AddExplosionForce(_explosionForce, explosionPosition, _explosionRadius);
     }
 }
