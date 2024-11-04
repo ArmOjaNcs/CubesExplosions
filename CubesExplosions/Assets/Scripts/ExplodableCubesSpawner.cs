@@ -6,25 +6,12 @@ public class ExplodableCubesSpawner : MonoBehaviour
     [SerializeField] private ExplodableCube _explodableCubePrefab;
     [SerializeField, Range(1,7)] private int _startCubesCount;
 
-    public static ExplodableCubesSpawner Instance { get; private set; }
-
-    private void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-            return;
-        }
-
-        Destroy(gameObject);
-    }
-
     private void Start()
     {
         SetStartCubes();
     }
 
-    public List<ExplodableCube> GetSpawnedCubes(Vector3 position, Vector3 scale, int explosionChance, int count)
+    public List<ExplodableCube> GetSpawnedCubes(Vector3 position, Vector3 scale, int explosionChance, int count, ExplodableCubesSpawner spawner)
     {
         List<ExplodableCube> explodableCubes = new List<ExplodableCube>();
 
@@ -35,11 +22,7 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         foreach(ExplodableCube explodableCube in explodableCubes)
-        {
-            explodableCube.SetExplosionChance(explosionChance);
-            explodableCube.SetScale(scale);
-            explodableCube.SetMaterial(MaterialHolder.Instance.GetMaterial());
-        }
+            explodableCube.Init(explosionChance, scale, MaterialHolder.Instance.GetMaterial(), spawner);
 
         return explodableCubes;
     }
