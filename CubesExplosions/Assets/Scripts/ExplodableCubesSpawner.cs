@@ -74,6 +74,6 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         foreach (var cube in startCubes)
-            cube.SetMaterial(MaterialHolder.Instance.GetMaterial());
+            cube.Init(cube.MaxExplosionChance, cube.transform.localScale, MaterialHolder.Instance.GetMaterial(), this, true);
     }
 }

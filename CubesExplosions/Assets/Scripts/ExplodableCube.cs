@@ -12,7 +12,8 @@ public class ExplodableCube : MonoBehaviour
     private Rigidbody _rigidbody;
     private MeshRenderer _renderer;
 
-    private readonly int _maxExplosionChance = 100;
+    public readonly int MaxExplosionChance = 100;
+
     private readonly int _minCountToSpawn = 2;
     private readonly int _maxCountToSpawn = 6;
     private readonly int _divider = 2;
@@ -22,21 +23,15 @@ public class ExplodableCube : MonoBehaviour
 
     private void Awake()
     {
-        if(transform.localScale.x == 1)
-        {
-            _spawner = (ExplodableCubesSpawner)FindObjectOfType(typeof(ExplodableCubesSpawner));
-            _explosionChance = _maxExplosionChance;
-        }
-
         _rigidbody = GetComponent<Rigidbody>();
         _renderer = GetComponent<MeshRenderer>();
     }
 
     private void OnMouseUpAsButton()
     {
-        int chanceToExploid = UserUtils.GetRandomNumber(_maxExplosionChance);
+        int chanceToExploid = UserUtils.GetRandomNumber(MaxExplosionChance);
 
-        if(chanceToExploid < _explosionChance)
+        if (chanceToExploid < _explosionChance)
         {
             int countToSpawn = UserUtils.GetRandomNumber(_minCountToSpawn, _maxCountToSpawn + 1);
             List<ExplodableCube> cubesToExploid = _spawner.GetSpawnedCubes(transform.position,
@@ -49,16 +44,17 @@ public class ExplodableCube : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Init(int parentExplosionChance, Vector3 parentScale, Material material, ExplodableCubesSpawner spawner)
+    public void Init(int parentExplosionChance, Vector3 parentScale, Material material, ExplodableCubesSpawner spawner, bool isStart = false)
     {
-        _explosionChance = parentExplosionChance / _divider;
-        transform.localScale = parentScale / _divider;
-        SetMaterial(material);
-        _spawner = spawner;
-    }
+        if (isStart)
+            _explosionChance = MaxExplosionChance;
+        else
+        {
+            _explosionChance = parentExplosionChance / _divider;
+            transform.localScale = parentScale / _divider;
+        }
 
-    public void SetMaterial(Material material)
-    {
+        _spawner = spawner;
         _renderer.sharedMaterial = material;
     }
 
