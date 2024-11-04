@@ -12,7 +12,7 @@ public class ExplodableCubesSpawner : MonoBehaviour
         SetStartCubes();
     }
 
-    public List<ExplodableCube> GetSpawnedCubes(Vector3 position, Vector3 scale, int explosionChance, int count, ExplodableCubesSpawner spawner)
+    public List<ExplodableCube> SpawnCubes(Vector3 position, Vector3 scale, int explosionChance, int count)
     {
         List<ExplodableCube> explodableCubes = new List<ExplodableCube>();
 
@@ -23,7 +23,7 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         foreach(ExplodableCube explodableCube in explodableCubes)
-            explodableCube.Init(explosionChance, scale, _materialHolder.GetMaterial(), spawner);
+            explodableCube.Init(explosionChance, scale, _materialHolder.GetMaterial(), this);
 
         return explodableCubes;
     }

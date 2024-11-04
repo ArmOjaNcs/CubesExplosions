@@ -9,10 +9,10 @@ public class ExplodableCube : MonoBehaviour
     [SerializeField, Range(5, 30)] private float _explosionRadius;
     [SerializeField, Range(100, 1000)] private float _explosionForce;
 
+    public readonly int MaxExplosionChance = 100;
+    
     private Rigidbody _rigidbody;
     private MeshRenderer _renderer;
-
-    public readonly int MaxExplosionChance = 100;
 
     private readonly int _minCountToSpawn = 2;
     private readonly int _maxCountToSpawn = 6;
@@ -34,8 +34,8 @@ public class ExplodableCube : MonoBehaviour
         if (chanceToExploid < _explosionChance)
         {
             int countToSpawn = Random.Range(_minCountToSpawn, _maxCountToSpawn + 1);
-            List<ExplodableCube> cubesToExploid = _spawner.GetSpawnedCubes(transform.position,
-                transform.localScale, _explosionChance, countToSpawn, _spawner);
+            List<ExplodableCube> cubesToExploid = _spawner.SpawnCubes(transform.position,
+                transform.localScale, _explosionChance, countToSpawn);
 
             foreach (ExplodableCube cube in cubesToExploid)
                 cube.AddExplosionForce(transform.position);
@@ -47,7 +47,9 @@ public class ExplodableCube : MonoBehaviour
     public void Init(int parentExplosionChance, Vector3 parentScale, Material material, ExplodableCubesSpawner spawner, bool isStart = false)
     {
         if (isStart)
+        {
             _explosionChance = MaxExplosionChance;
+        }
         else
         {
             _explosionChance = parentExplosionChance / _divider;
