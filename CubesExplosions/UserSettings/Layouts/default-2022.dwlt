@@ -443,8 +443,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3c110000
-      m_LastClickedID: 0
+      m_SelectedIDs: d05a0000
+      m_LastClickedID: 23248
       m_ExpandedIDs: 30fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1330,7 +1330,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 22840
+  m_LastSelectedObjectID: 23248
 --- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52

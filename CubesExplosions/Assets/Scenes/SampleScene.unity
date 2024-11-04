@@ -295,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explodableCubePrefab: {fileID: 6432439869118297508, guid: 79b78f02274674e48bc825d8e0496799, type: 3}
   _startCubesCount: 7
+  _materialHolder: {fileID: 1735950703}
 --- !u!4 &695864987
 Transform:
   m_ObjectHideFlags: 0

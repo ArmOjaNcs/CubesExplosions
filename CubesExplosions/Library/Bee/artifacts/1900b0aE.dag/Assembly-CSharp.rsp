@@ -358,7 +358,6 @@
 "Assets/Scripts/ExplodableCube.cs"
 "Assets/Scripts/ExplodableCubesSpawner.cs"
 "Assets/Scripts/MaterialHolder.cs"
-"Assets/Scripts/UserUtils.cs"
 -langversion:9.0
 
 /deterministic

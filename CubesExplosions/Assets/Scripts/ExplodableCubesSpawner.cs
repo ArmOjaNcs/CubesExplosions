@@ -5,6 +5,7 @@ public class ExplodableCubesSpawner : MonoBehaviour
 {
     [SerializeField] private ExplodableCube _explodableCubePrefab;
     [SerializeField, Range(1,7)] private int _startCubesCount;
+    [SerializeField] private MaterialHolder _materialHolder;
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         foreach(ExplodableCube explodableCube in explodableCubes)
-            explodableCube.Init(explosionChance, scale, MaterialHolder.Instance.GetMaterial(), spawner);
+            explodableCube.Init(explosionChance, scale, _materialHolder.GetMaterial(), spawner);
 
         return explodableCubes;
     }
@@ -74,6 +75,6 @@ public class ExplodableCubesSpawner : MonoBehaviour
         }
 
         foreach (var cube in startCubes)
-            cube.Init(cube.MaxExplosionChance, cube.transform.localScale, MaterialHolder.Instance.GetMaterial(), this, true);
+            cube.Init(cube.MaxExplosionChance, cube.transform.localScale, _materialHolder.GetMaterial(), this, true);
     }
 }

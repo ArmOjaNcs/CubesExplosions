@@ -29,11 +29,11 @@ public class ExplodableCube : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        int chanceToExploid = UserUtils.GetRandomNumber(MaxExplosionChance);
-
+        int chanceToExploid = Random.Range(0, MaxExplosionChance);
+   
         if (chanceToExploid < _explosionChance)
         {
-            int countToSpawn = UserUtils.GetRandomNumber(_minCountToSpawn, _maxCountToSpawn + 1);
+            int countToSpawn = Random.Range(_minCountToSpawn, _maxCountToSpawn + 1);
             List<ExplodableCube> cubesToExploid = _spawner.GetSpawnedCubes(transform.position,
                 transform.localScale, _explosionChance, countToSpawn, _spawner);
 
